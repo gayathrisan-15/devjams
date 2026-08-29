@@ -76,8 +76,8 @@ def on_message(client, userdata, msg):
 police_bot = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 police_bot.on_message = on_message
 police_bot.connect("localhost", 1883, 60)  # <-- switched to local broker
+topic = "devjams_gayathri_drones/+/telemetry"
 
-topic = "devjams_gayathri_drones/#"
 police_bot.subscribe(topic)
 
 print(f"Detector is running and listening on '{topic}'...")
