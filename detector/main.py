@@ -28,6 +28,8 @@ police_bot.on_message = check_letter
 # Use the free online test server instead of local
 police_bot.connect("broker.hivemq.com", 1883, 60)
 # Change this line:
-police_bot.subscribe("devjams_gayathri_drones/#")
+git add drones/main.py
+git commit -m "Update drone script to use public broker and matching keys"
+git push origin main
 print("Detector is running and listening on 'drones/#'...")
 police_bot.loop_forever()
