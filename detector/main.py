@@ -18,7 +18,13 @@ def is_blocked(drone_id):
     return get_trust(drone_id) < 30
 
 # ---- Keep last known position to detect "teleporting" ----
-last_position = {}  # e.g. {"drone-1": (lat, lon)}
+last_position = {}       # e.g. {"drone-1": (lat, lon)}
+message_timestamps = {}  # e.g. {"drone-1": [time1, time2, time3, ...]}
+FLOOD_THRESHOLD = 10
+
+# ---- List of drones you actually started for this demo ----
+# IMPORTANT: update this to match whatever drone IDs you're really running
+KNOWN_DRONES = {"drone-1", "drone-2", "drone-3"}
 
 def on_message(client, userdata, msg):
     try:
@@ -39,12 +45,30 @@ def on_message(client, userdata, msg):
         # ---- Check 2: impossible position jump (GPS spoof) ----
         if drone_name in last_position:
             old_lat, old_lon = last_position[drone_name]
-            # rough distance check — real GPS shouldn't jump this much in 2 seconds
             jump = abs(lat - old_lat) + abs(lon - old_lon)
-            if jump > 1.0:  # tune this number based on your simulated movement
+            if jump > 1.0:
                 print(f"🚨 ALERT! {drone_name} teleported — possible GPS spoof!")
                 anomaly_found = True
         last_position[drone_name] = (lat, lon)
+
+        # ---- Check 3: message flooding ----
+        now = time.time()
+        if drone_name not in message_timestamps:
+            message_timestamps[drone_name] = []
+
+        message_timestamps[drone_name].append(now)
+        message_timestamps[drone_name] = [
+            t for t in message_timestamps[drone_name] if now - t <= 1.0
+        ]
+
+        if len(message_timestamps[drone_name]) > FLOOD_THRESHOLD:
+            print(f"🚨 ALERT! {drone_name} is flooding messages — possible DoS attack!")
+            anomaly_found = True
+
+        # ---- Check 4: unknown/impersonating drone ----
+        if drone_name not in KNOWN_DRONES:
+            print(f"🚨 ALERT! Unknown drone '{drone_name}' — possible impersonation!")
+            anomaly_found = True
 
         # ---- Update trust score ----
         if anomaly_found:
@@ -75,9 +99,9 @@ def on_message(client, userdata, msg):
 
 police_bot = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 police_bot.on_message = on_message
-police_bot.connect("localhost", 1883, 60)  # <-- switched to local broker
-topic = "devjams_gayathri_drones/+/telemetry"
+police_bot.connect("localhost", 1883, 60)
 
+topic = "devjams_gayathri_drones/+/telemetry"
 police_bot.subscribe(topic)
 
 print(f"Detector is running and listening on '{topic}'...")
