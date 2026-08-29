@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AERO-TRUST ZERO</title>
+    <style>
+        :root {
+            --bg-dark: #07232b;
+            --bg-mid: #103c47;
+            --bg-teal: #206d80;
+            --bg-light: #2b889e;
+            --card-bg: #0c2d36;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-white: #ffffff;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --btn-red: #6b3a43;
+            --accent-cyan: #54b2c9;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(180deg, #07232b 0%, #103c47 30%, #206d80 70%, #2b889e 100%);
+            background-attachment: fixed;
+            color: var(--text-white);
+            overflow-y: auto;
+        }
+
+        /* Navigation Bar with Deep Shadow */
+        .navbar {
+            background: rgba(7, 35, 43, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 14px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(84, 178, 201, 0.15);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.25s ease, filter 0.25s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.04);
+            filter: drop-shadow(0 0 8px rgba(84, 178, 201, 0.6));
+        }
+
+        .nav-links { display: flex; gap: 24px; font-size: 0.88rem; font-weight: 600; }
+        .nav-links a { 
+            color: rgba(255, 255, 255, 0.85); 
+            text-decoration: none; 
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-links a:hover { 
+            color: #ffffff; 
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-links a:active {
+            transform: scale(0.95);
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            min-height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 90px 20px 40px 20px;
+            box-sizing: border-box;
+        }
+
+        /* Background Leaves */
+        .leaf-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 80% 0 80% 0;
+            pointer-events: none;
+        }
+        .leaf-1 { width: 420px; height: 420px; top: 10%; left: -6%; transform: rotate(-20deg); }
+        .leaf-2 { width: 500px; height: 500px; top: -5%; right: -5%; transform: rotate(35deg); }
+        .leaf-3 { width: 450px; height: 450px; bottom: -10%; right: 20%; transform: rotate(-55deg); }
+
+        /* Animated Floating Background Drones with Drop Shadows */
+        .bg-drone {
+            position: absolute;
+            opacity: 0.35;
+            pointer-events: none;
+            animation: floatDrone 12s ease-in-out infinite alternate;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
+        }
+        .bg-drone-1 { top: 15%; left: 18%; width: 40px; animation-duration: 9s; }
+        .bg-drone-2 { top: 35%; left: 32%; width: 30px; animation-duration: 14s; animation-delay: -3s; }
+        .bg-drone-3 { top: 22%; right: 25%; width: 35px; animation-duration: 11s; animation-delay: -5s; }
+        .bg-drone-4 { top: 50%; right: 12%; width: 45px; animation-duration: 10s; animation-delay: -2s; }
+
+        @keyframes floatDrone {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(25px, -20px) rotate(4deg); }
+            100% { transform: translate(-20px, 15px) rotate(-3deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 950px;
+        }
+
+        /* Central Drone Logo with Glowing Shadow */
+        .drone-hero-icon {
+            width: 140px;
+            height: 70px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: heroDronePulse 4s ease-in-out infinite alternate;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+        }
+
+        .drone-hero-icon:hover {
+            transform: scale(1.18) translateY(-6px);
+            filter: drop-shadow(0 12px 24px rgba(84, 178, 201, 0.8));
+        }
+
+        .drone-hero-icon:active {
+            transform: scale(0.92);
+        }
+
+        @keyframes heroDronePulse {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .tag-badge {
+            background: rgba(12, 45, 54, 0.9);
+            color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-transform: uppercase;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.25s ease;
+            cursor: default;
+        }
+
+        .tag-badge:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(84, 178, 201, 0.5), 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .hero-banner h1 {
+            margin: 0 0 16px 0;
+            font-size: 3.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            text-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .hero-banner p {
+            margin: 0 0 38px 0;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            line-height: 1.5;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        /* Metric Cards with Dynamic Layered Shadow & Pop */
+        .hero-metrics-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .metric-card {
+            background: rgba(12, 45, 54, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 22px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(84, 178, 201, 0.4);
+        }
+
+        .metric-card:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-card .label { 
+            font-size: 0.68rem; 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            color: rgba(255, 255, 255, 0.7); 
+            letter-spacing: 1px; 
+            margin-bottom: 12px; 
+        }
+        .metric-card .value { 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            color: #ffffff;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+        }
+
+        /* Workspace Panels with Elevation Shadows */
+        .main-section {
+            padding: 20px 40px 80px 40px;
+        }
+
+        .workspace-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 24px;
+        }
+
+        .panel-block {
+            background: rgba(14, 52, 62, 0.82);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 22px;
+            color: #ffffff;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0,0,0,0.2);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel-block:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .panel-block h3 { 
+            margin: 0 0 16px 0; 
+            font-size: 1.15rem; 
+            color: #ffffff; 
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .radar-container {
+            position: relative;
+            height: 430px;
+            background: #021115;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: crosshair;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 6px 16px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .radar-container:hover {
+            border-color: rgba(84, 178, 201, 0.5);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(84, 178, 201, 0.35);
+        }
+
+        canvas { display: block; width: 100%; height: 100%; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.85rem; color: rgba(255, 255, 255, 0.9); }
+        th { color: rgba(255, 255, 255, 0.6); font-weight: 700; text-transform: uppercase; font-size: 0.7rem; }
+
+        tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+            box-shadow: -4px 0 10px rgba(84, 178, 201, 0.2);
+        }
+
+        tr.selected-row { 
+            background: rgba(255, 255, 255, 0.15); 
+            outline: 1px solid rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .badge { 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-weight: 700; 
+            font-size: 0.7rem; 
+            color: #fff; 
+            text-transform: uppercase;
+            display: inline-block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        tr:hover .badge {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .badge-HEALTHY { background: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+        .badge-SUSPICIOUS { background: #f59e0b; box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+        .badge-ISOLATED { background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+
+        .console {
+            background: #020c0e;
+            color: #d0e8ef;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 12px;
+            border-radius: 8px;
+            height: 220px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        }
+        .entry { margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 3px; }
+        .entry-ATTACK { color: #fca5a5; text-shadow: 0 0 4px rgba(239, 68, 68, 0.4); }
+        .entry-ISOLATION { color: #f87171; font-weight: bold; text-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .entry-SYSTEM { color: #93c5fd; }
+
+        .section-label-small {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.8px;
+            margin-top: 14px;
+            margin-bottom: 8px;
+        }
+
+        .controls-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+        /* Buttons with Deep Shadows and Glows */
+        .btn-threat {
+            background: var(--btn-red);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-threat:hover { 
+            background: #82424e; 
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 22px rgba(239, 68, 68, 0.4), 0 0 12px rgba(239, 68, 68, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-threat:active {
+            transform: scale(0.92);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-reset {
+            background: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3), 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .btn-reset:hover { 
+            background: #059669; 
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5), 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-reset:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .target-indicator { font-size: 0.82rem; color: rgba(255, 255, 255, 0.85); margin-top: 10px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-brand">
+            <svg width="34" height="18" viewBox="0 0 100 50">
+                <ellipse cx="50" cy="25" rx="35" ry="12" fill="#54b2c9"/>
+                <rect x="20" y="8" width="12" height="4" fill="#ffffff" rx="1"/>
+                <rect x="68" y="8" width="12" height="4" fill="#ffffff" rx="1"/>
+                <line x1="26" y1="12" x2="35" y2="20" stroke="#ffffff" stroke-width="2.5"/>
+                <line x1="74" y1="12" x2="65" y2="20" stroke="#ffffff" stroke-width="2.5"/>
+                <line x1="38" y1="35" x2="30" y2="46" stroke="#54b2c9" stroke-width="3"/>
+                <line x1="62" y1="35" x2="70" y2="46" stroke="#54b2c9" stroke-width="3"/>
+            </svg>
+            AERO-TRUST ZERO
+        </div>
+        <div class="nav-links">
+            <a href="#hero">Overview</a>
+            <a href="#radar">Radar Telemetry</a>
+            <a href="#matrix">Swarm Matrix</a>
+            <a href="#console">Security Stream</a>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner" id="hero">
+        <div class="leaf-shape leaf-1"></div>
+        <div class="leaf-shape leaf-2"></div>
+        <div class="leaf-shape leaf-3"></div>
+
+        <!-- Floating Background Drones -->
+        <svg class="bg-drone bg-drone-1" viewBox="0 0 100 50"><ellipse cx="50" cy="25" rx="35" ry="12" fill="#71c3d6"/><line x1="38" y1="35" x2="30" y2="46" stroke="#71c3d6" stroke-width="3"/><line x1="62" y1="35" x2="70" y2="46" stroke="#71c3d6" stroke-width="3"/></svg>
+        <svg class="bg-drone bg-drone-2" viewBox="0 0 100 50"><ellipse cx="50" cy="25" rx="35" ry="12" fill="#71c3d6"/><line x1="38" y1="35" x2="30" y2="46" stroke="#71c3d6" stroke-width="3"/><line x1="62" y1="35" x2="70" y2="46" stroke="#71c3d6" stroke-width="3"/></svg>
+        <svg class="bg-drone bg-drone-3" viewBox="0 0 100 50"><ellipse cx="50" cy="25" rx="35" ry="12" fill="#71c3d6"/><line x1="38" y1="35" x2="30" y2="46" stroke="#71c3d6" stroke-width="3"/><line x1="62" y1="35" x2="70" y2="46" stroke="#71c3d6" stroke-width="3"/></svg>
+        <svg class="bg-drone bg-drone-4" viewBox="0 0 100 50"><ellipse cx="50" cy="25" rx="35" ry="12" fill="#71c3d6"/><line x1="38" y1="35" x2="30" y2="46" stroke="#71c3d6" stroke-width="3"/><line x1="62" y1="35" x2="70" y2="46" stroke="#71c3d6" stroke-width="3"/></svg>
+
+        <div class="hero-content">
+            <!-- Drone Hero Logo -->
+            <svg class="drone-hero-icon" viewBox="0 0 100 50">
+                <ellipse cx="50" cy="25" rx="32" ry="11" fill="#54b2c9"/>
+                <rect x="18" y="7" width="14" height="3" fill="#ffffff" rx="1"/>
+                <rect x="68" y="7" width="14" height="3" fill="#ffffff" rx="1"/>
+                <line x1="25" y1="10" x2="33" y2="20" stroke="#ffffff" stroke-width="2"/>
+                <line x1="75" y1="10" x2="67" y2="20" stroke="#ffffff" stroke-width="2"/>
+                <line x1="38" y1="34" x2="30" y2="47" stroke="#54b2c9" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="62" y1="34" x2="70" y2="47" stroke="#54b2c9" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+
+            <div class="tag-badge">SWARM DEFENSE CONTROLLER</div>
+            <h1>Autonomous Zero-Trust Drone Platform</h1>
+            <p>Continuous cryptographic handshake, real-time spatial anomaly defense, and automated node isolation.</p>
+
+            <div class="hero-metrics-grid">
+                <div class="metric-card">
+                    <div class="label">ACTIVE UNITS</div>
+                    <div class="value" id="m-active">4 / 4</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">ISOLATED THREAT NODES</div>
+                    <div class="value" id="m-isolated" style="color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.5);">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">SWARM TRUST INDEX</div>
+                    <div class="value" id="m-trust">100.0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">MESH PROTOCOL</div>
+                    <div class="value" style="color: #10b981; text-shadow: 0 0 10px rgba(16,185,129,0.5);">Active</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="main-section">
+        <div class="workspace-container">
+            <div class="panel-block" id="radar">
+                <h3>Swarm Telemetry Radar Grid</h3>
+                <div class="radar-container" id="radar-box">
+                    <canvas id="radarCanvas"></canvas>
+                </div>
+                
+                <div class="target-indicator">Selected Attack Target: <span id="target-id" style="color: #ffffff; font-weight: bold;">DR-03</span></div>
+
+                <div class="section-label-small">INTERACTIVE THREAT INJECTION ENGINE:</div>
+                <div class="controls-grid">
+                    <button class="btn-threat" onclick="triggerAttack('GPS_SPOOF')">Inject GPS Spoof</button>
+                    <button class="btn-threat" onclick="triggerAttack('TAMPER')">Tamper Payload</button>
+                    <button class="btn-threat" onclick="triggerAttack('REPLAY')">Replay Attack</button>
+                    <button class="btn-threat" onclick="triggerAttack('GEOFENCE')">Geofence Breach</button>
+                </div>
+                <button class="btn-reset" onclick="resetSwarm()">Reset Swarm Mesh</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div class="panel-block" id="matrix">
+                    <h3>Swarm Telemetry Matrix</h3>
+                    <table>
+                        <thead>
+                            <tr><th>DRONE ID</th><th>STATUS</th><th>TRUST</th><th>SPEED</th><th>BATTERY</th></tr>
+                        </thead>
+                        <tbody id="drone-table"></tbody>
+                    </table>
+                </div>
+
+                <div class="panel-block" id="console">
+                    <h3>Security Event Stream Log</h3>
+                    <div class="console" id="console-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("radarCanvas");
+        const ctx = canvas.getContext("2d");
+        const container = document.getElementById("radar-box");
+
+        function resizeCanvas() {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        let sweepAngle = 0;
+        let selectedDroneId = "DR-03";
+        let geofenceLimit = 160.0;
+        let renderedNodePoints = {};
+        let cycleCount = 1590;
+
+        let droneState = {
+            "DR-01": { x: 40, y: -90, speed: 5.7, battery: 18.2, trust_score: 100.0, status: "HEALTHY", trail: [] },
+            "DR-03": { x: 110, y: -30, speed: 6.9, battery: 15.2, trust_score: 100.0, status: "HEALTHY", trail: [] },
+            "DR-05": { x: 30, y: 110, speed: 30.8, battery: 11.2, trust_score: 100.0, status: "HEALTHY", trail: [] },
+            "DR-06": { x: -110, y: 30, speed: 5.4, battery: 8.2, trust_score: 100.0, status: "HEALTHY", trail: [] }
+        };
+
+        canvas.addEventListener("click", (evt) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = evt.clientX - rect.left;
+            const clickY = evt.clientY - rect.top;
+
+            for (const [id, pt] of Object.entries(renderedNodePoints)) {
+                if (Math.hypot(clickX - pt.x, clickY - pt.y) <= 18) {
+                    selectDrone(id);
+                    break;
+                }
+            }
+        });
+
+        function selectDrone(id) {
+            selectedDroneId = id;
+            document.getElementById("target-id").innerText = id;
+            updateUI();
+        }
+
+        function drawRadar() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxRadius = Math.min(width, height) * 0.42;
+
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+            ctx.lineWidth = 1;
+            const gridSize = 30;
+            for (let x = 0; x < width; x += gridSize) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+            }
+            for (let y = 0; y < height; y += gridSize) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+            }
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+            for (let r = 1; r <= 3; r++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, (maxRadius / 3) * r, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            ctx.strokeStyle = "rgba(239, 68, 68, 0.35)";
+            ctx.beginPath(); ctx.moveTo(centerX, 0); ctx.lineTo(centerX, height); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, centerY); ctx.lineTo(width, centerY); ctx.stroke();
+
+            const geoRadiusPx = (geofenceLimit / 200) * maxRadius;
+            ctx.strokeStyle = "rgba(239, 68, 68, 0.4)";
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, geoRadiusPx, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = "#60a5fa";
+            ctx.fillRect(centerX - 6, centerY - 6, 12, 12);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 9px monospace";
+            ctx.fillText("GCS-0", centerX - 14, centerY + 16);
+
+            sweepAngle += 0.015;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, maxRadius, sweepAngle - 0.35, sweepAngle);
+            ctx.closePath();
+            ctx.fillStyle = "rgba(84, 178, 207, 0.12)";
+            ctx.fill();
+            ctx.restore();
+
+            renderedNodePoints = {};
+
+            for (const [id, drone] of Object.entries(droneState)) {
+                const px = centerX + (drone.x / 200) * maxRadius;
+                const py = centerY + (drone.y / 200) * maxRadius;
+                renderedNodePoints[id] = { x: px, y: py };
+
+                drone.trail.push({ x: px, y: py });
+                if (drone.trail.length > 25) drone.trail.shift();
+
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+                ctx.beginPath();
+                for (let i = 0; i < drone.trail.length; i++) {
+                    const pt = drone.trail[i];
+                    if (i === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.stroke();
+
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                const color = drone.status === "HEALTHY" ? "#10b981" : (drone.status === "SUSPICIOUS" ? "#f59e0b" : "#ef4444");
+                
+                if (id === selectedDroneId) {
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.arc(px, py, 11, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(px, py, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 9px monospace";
+                ctx.fillText(id, px - 12, py + 16);
+            }
+
+            requestAnimationFrame(drawRadar);
+        }
+
+        drawRadar();
+
+        function updateUI() {
+            let activeCount = 0;
+            let isolatedCount = 0;
+            let totalTrust = 0;
+
+            const tbody = document.getElementById("drone-table");
+            tbody.innerHTML = "";
+
+            for (const [id, drone] of Object.entries(droneState)) {
+                if (drone.status !== "ISOLATED") activeCount++;
+                else isolatedCount++;
+                totalTrust += drone.trust_score;
+
+                const isSelected = id === selectedDroneId ? "selected-row" : "";
+                tbody.innerHTML += `
+                    <tr class="${isSelected}" onclick="selectDrone('${id}')">
+                        <td><b>${id}</b></td>
+                        <td><span class="badge badge-${drone.status}">${drone.status}</span></td>
+                        <td>${drone.trust_score.toFixed(1)}</td>
+                        <td>${drone.speed.toFixed(1)} m/s</td>
+                        <td>${drone.battery.toFixed(1)}%</td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById("m-active").innerText = `${activeCount} / ${Object.keys(droneState).length}`;
+            document.getElementById("m-isolated").innerText = isolatedCount;
+            document.getElementById("m-trust").innerText = `${(totalTrust / Object.keys(droneState).length).toFixed(1)}%`;
+        }
+
+        function logConsole(type, droneId, message) {
+            const consoleBox = document.getElementById("console-box");
+            const div = document.createElement("div");
+            div.className = "entry entry-" + type;
+            div.innerText = `[Cycle ${cycleCount}] ${type}: [${droneId}] ${message}`;
+            consoleBox.prepend(div);
+        }
+
+        setInterval(() => {
+            cycleCount++;
+            let i = 0;
+            for (const [id, drone] of Object.entries(droneState)) {
+                if (drone.status === "ISOLATED") continue;
+
+                let angle = (cycleCount * 0.03) + (i * (Math.PI / 2));
+                let radius = 90.0 + (Math.sin(cycleCount * 0.1 + i) * 15);
+                drone.x = radius * Math.cos(angle);
+                drone.y = radius * Math.sin(angle);
+                drone.battery = Math.max(0, drone.battery - 0.01);
+
+                logConsole("SYSTEM", id, `Packet #${cycleCount} verified.`);
+                i++;
+            }
+            updateUI();
+        }, 1200);
+
+        function triggerAttack(type) {
+            const target = droneState[selectedDroneId];
+            if (!target) return;
+
+            if (type === "GPS_SPOOF") {
+                target.x += 100.0;
+                target.trust_score -= 35;
+            } else if (type === "TAMPER") {
+                target.trust_score -= 50;
+            } else if (type === "REPLAY") {
+                target.trust_score -= 40;
+            } else if (type === "GEOFENCE") {
+                target.x = 180; target.y = 180;
+                target.trust_score -= 30;
+            }
+
+            target.trust_score = Math.max(0, target.trust_score);
+            target.status = target.trust_score < 40 ? "ISOLATED" : (target.trust_score < 75 ? "SUSPICIOUS" : "HEALTHY");
+            logConsole("ATTACK", selectedDroneId, `Threat Injected: ${type}`);
+
+            if (target.status === "ISOLATED") {
+                logConsole("ISOLATION", selectedDroneId, `Trust Critical (${target.trust_score.toFixed(1)}). Node isolated.`);
+            }
+            updateUI();
+        }
+
+        function resetSwarm() {
+            droneState = {
+                "DR-01": { x: 40, y: -90, speed: 5.7, battery: 98.0, trust_score: 100.0, status: "HEALTHY", trail: [] },
+                "DR-03": { x: 110, y: -30, speed: 6.9, battery: 95.0, trust_score: 100.0, status: "HEALTHY", trail: [] },
+                "DR-05": { x: 30, y: 110, speed: 30.8, battery: 91.0, trust_score: 100.0, status: "HEALTHY", trail: [] },
+                "DR-06": { x: -110, y: 30, speed: 5.4, battery: 88.0, trust_score: 100.0, status: "HEALTHY", trail: [] }
+            };
+            logConsole("SYSTEM", "ALL", "Swarm mesh restored.");
+            updateUI();
+        }
+
+        logConsole("SYSTEM", "DR-06", "Packet #1596 verified.");
+        logConsole("SYSTEM", "DR-05", "Packet #1596 verified.");
+        logConsole("SYSTEM", "DR-03", "Packet #1596 verified.");
+        logConsole("SYSTEM", "DR-01", "Packet #1596 verified.");
+    </script>
+</body>
+</html>
