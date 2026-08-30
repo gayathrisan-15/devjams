@@ -231,28 +231,6 @@ The frontend will eventually receive real data such as:
 The frontend will then replace the current demo/static values with live
 backend data.
 
-## 🛠️ Current Development Status
-
-### Completed
-
--   [x] Next.js frontend setup
--   [x] Navigation bar
--   [x] Dashboard
--   [x] Fleet page structure
--   [x] Live Map page structure
--   [x] Security page structure
--   [x] Audit Logs page structure
--   [x] Initial anomaly/security monitoring UI
-
-### In Progress
-
--   [ ] Connect frontend to backend APIs
--   [ ] Display real drone telemetry
--   [ ] Connect real-time map data
--   [ ] Add real-time attack alerts
--   [ ] Add authentication/authorization
--   [ ] Improve AI-based threat prioritization
--   [ ] Implement offline data synchronization
 
 ## 🎯 Hackathon MVP
 
@@ -293,4 +271,3 @@ together to support faster and safer disaster-response operations.
 
 ------------------------------------------------------------------------
 
-**Built for Smart India Hackathon (SIH) 🚁🛡️**
