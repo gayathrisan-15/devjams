@@ -1,3 +1,5 @@
+import Menu from "../components/Menu"
+
 export default function FleetPage() {
   const drones = [
     {
@@ -27,9 +29,23 @@ export default function FleetPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-[#0f243d] text-white p-6 sm:p-10">
+    <main className="min-h-screen bg-[#0f243d] text-white p-6 sm:p-10 relative">
 
-      <div className="max-w-7xl mx-auto">
+      {/* TOP LEFT - AEROMESH + MENU */}
+      <div className="absolute top-6 left-8 z-50 flex items-center gap-4">
+
+        {/* AEROMESH */}
+        <div className="text-white text-2xl font-black tracking-wide">
+          AEROMESH
+        </div>
+
+        {/* MENU */}
+        <Menu />
+
+      </div>
+
+
+      <div className="max-w-7xl mx-auto pt-20">
 
         {/* PAGE TITLE */}
         <div className="border-b-2 border-white/20 pb-5 mb-8">

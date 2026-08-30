@@ -1,3 +1,6 @@
+import AttacksView from "../components/AttacksView"
+import Menu from "../components/Menu"
+
 export default function SecurityPage() {
   const threats = [
     {
@@ -18,10 +21,26 @@ export default function SecurityPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-[#0f243d] text-white p-6 sm:p-10">
+    <main className="min-h-screen bg-[#0f243d] text-white p-6 sm:p-10 relative">
 
-      <div className="max-w-7xl mx-auto">
+      {/* TOP LEFT - AEROMESH + MENU */}
+      <div className="absolute top-6 left-8 z-50 flex items-center gap-4">
 
+        {/* AEROMESH */}
+        <div className="text-white text-2xl font-black tracking-wide">
+          AEROMESH
+        </div>
+
+        {/* MENU */}
+        <Menu />
+
+      </div>
+
+
+      {/* MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto pt-20">
+
+        {/* PAGE TITLE */}
         <div className="border-b-2 border-white/20 pb-5 mb-8">
 
           <p className="text-sm uppercase tracking-widest text-blue-200 font-bold">
@@ -46,6 +65,7 @@ export default function SecurityPage() {
           <div className="flex items-center justify-between">
 
             <div>
+
               <p className="text-blue-200 text-sm">
                 Overall Security Status
               </p>
@@ -53,6 +73,7 @@ export default function SecurityPage() {
               <h2 className="text-3xl font-black mt-1">
                 SECURE
               </h2>
+
             </div>
 
             <div className="text-4xl">
@@ -95,6 +116,13 @@ export default function SecurityPage() {
 
           ))}
 
+        </div>
+
+
+        {/* ATTACKS VIEW */}
+
+        <div className="mt-10">
+          <AttacksView />
         </div>
 
       </div>

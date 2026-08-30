@@ -1,5 +1,10 @@
+import type { Metadata } from "next"
 import "./globals.css"
-import Navbar from "./components/Navbar"
+
+export const metadata: Metadata = {
+  title: "AeroMesh",
+  description: "Beyond-Line-of-Sight Drone Communication Network",
+}
 
 export default function RootLayout({
   children,
@@ -8,10 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
